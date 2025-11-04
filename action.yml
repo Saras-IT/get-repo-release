@@ -19,6 +19,10 @@ inputs:
   excludes:
     description: "Types of releases to exclude (e.g. draft,prerelease,release).Comma seperated list."
     required: false
+  ignoreDate:
+    description: "If true, compares tags by tag value (ignoring creation date). If false, returns newest by creation date. Default is true."
+    required: false
+    default: "true"
 outputs:
   id:
     description: "Id of the release"
@@ -39,7 +43,7 @@ outputs:
   upload_url:
     description: "Release upload url"
 runs:
-  using: "node20"
+  using: "node24"
   main: "dist/index.js"
 branding:
   icon: "tag"
