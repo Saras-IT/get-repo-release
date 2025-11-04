@@ -13,6 +13,18 @@ Get latest release of Github Repo including draft and prerelease. Return informa
 
 Exclude some types of releases separated by `,`. Examples: `draft,prerelease`, `prerelease,release`, `draft`
 
+### `ignoreDate`
+
+**Optional** If `true`, compares tags by tag value (ignoring creation date) to find the maximum tag. If `false`, returns the newest release by creation date. Default is `true`.
+
+When `ignoreDate` is `true` (default), the action will:
+- Compare tags semantically (e.g., `v26.4.2-1.40` > `v26.4.2-1.39`, `v2-prod-10.100` > `v2-prod-01.100`)
+- Handle zero-padding correctly (e.g., `v2-prod-01.100` = `v2-prod-1.100`)
+- Return the maximum tag value regardless of when it was created
+
+When `ignoreDate` is `false`, the action will:
+- Return the release with the newest creation date among filtered releases
+
 ### `view_top`
 
 Numbers of releases which will be searched. Default value `100`.
@@ -63,6 +75,8 @@ steps:
       filter: 'v2-*'
       # Types of releases to exclude (e.g. draft,prerelease,release).Comma seperated list.
       excludes: "release"
+      # Compare tags by value (true) or by creation date (false). Default is true.
+      ignoreDate: true
   - name: "Print result"
     run: |
       echo "id: ${{ steps.last_release.outputs.id }}"
